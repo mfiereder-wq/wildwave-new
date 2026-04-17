@@ -63,7 +63,7 @@ const ImpressumModal = ({ isOpen, onClose }) => {
 
             <div>
               <h3 className="font-heading font-semibold text-black mb-2">Vertretungsberechtigte Person</h3>
-              <p>Geschäftsführer: [Name einfügen]</p>
+              <p>Geschäftsführer: Marco Amadeus</p>
             </div>
 
             <div>
