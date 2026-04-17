@@ -1,11 +1,149 @@
 import { useState, useEffect, useRef } from 'react';
 import '@/App.css';
 import axios from 'axios';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { Phone, MapPin, ArrowRight, Menu, X, Send, Palette, TrendingUp, Megaphone, Code } from 'lucide-react';
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
+import { Phone, MapPin, ArrowRight, Menu, X, Send, Palette, TrendingUp, Megaphone, Code, Cookie, Shield } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
+
+// Professional Logo Component
+const Logo = ({ className = "", light = false }) => (
+  <div className={`flex items-center gap-2 ${className}`} data-testid="logo">
+    <div className={`relative w-10 h-10 ${light ? 'bg-white' : 'bg-black'}`}>
+      <div className={`absolute inset-1 ${light ? 'bg-black' : 'bg-white'}`}>
+        <div className={`absolute top-1 left-1 w-2 h-2 ${light ? 'bg-white' : 'bg-black'}`}></div>
+        <div className={`absolute bottom-1 right-1 w-3 h-1 ${light ? 'bg-[#FF3B30]' : 'bg-[#FF3B30]'}`}></div>
+      </div>
+    </div>
+    <span className={`font-heading font-black text-2xl tracking-tighter uppercase ${light ? 'text-white' : 'text-black'}`}>
+      WILDWAVE
+    </span>
+  </div>
+);
+
+// Cookie Banner Component (Swiss DSG compliant)
+const CookieBanner = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+
+  useEffect(() => {
+    const consent = localStorage.getItem('wildwave_cookie_consent');
+    if (!consent) {
+      setIsVisible(true);
+    }
+  }, []);
+
+  const handleAcceptAll = () => {
+    localStorage.setItem('wildwave_cookie_consent', JSON.stringify({
+      essential: true,
+      analytics: true,
+      marketing: true,
+      timestamp: new Date().toISOString()
+    }));
+    setIsVisible(false);
+  };
+
+  const handleAcceptEssential = () => {
+    localStorage.setItem('wildwave_cookie_consent', JSON.stringify({
+      essential: true,
+      analytics: false,
+      marketing: false,
+      timestamp: new Date().toISOString()
+    }));
+    setIsVisible(false);
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 100, opacity: 0 }}
+        transition={{ duration: 0.4 }}
+        className="fixed bottom-0 left-0 right-0 z-[100] bg-white border-t border-zinc-200 shadow-2xl"
+        data-testid="cookie-banner"
+      >
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-6">
+          <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 bg-zinc-100 flex items-center justify-center">
+                  <Cookie size={20} strokeWidth={1.5} />
+                </div>
+                <h3 className="font-heading font-bold text-lg">Datenschutz-Einstellungen</h3>
+              </div>
+              <p className="text-sm text-zinc-600 leading-relaxed max-w-2xl">
+                Wir verwenden Cookies und ähnliche Technologien, um Ihnen ein optimales Nutzererlebnis zu bieten. 
+                Gemäss dem Schweizer Datenschutzgesetz (DSG) informieren wir Sie transparent über die Datenverarbeitung. 
+                Sie können Ihre Einstellungen jederzeit anpassen.
+              </p>
+              
+              {showDetails && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  className="mt-4 pt-4 border-t border-zinc-100"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div className="flex items-start gap-2">
+                      <Shield size={16} className="text-green-600 mt-0.5" />
+                      <div>
+                        <p className="font-semibold">Essenziell</p>
+                        <p className="text-zinc-500">Notwendig für die Funktion der Website</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <TrendingUp size={16} className="text-blue-600 mt-0.5" />
+                      <div>
+                        <p className="font-semibold">Analyse</p>
+                        <p className="text-zinc-500">Helfen uns, die Website zu verbessern</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Megaphone size={16} className="text-orange-600 mt-0.5" />
+                      <div>
+                        <p className="font-semibold">Marketing</p>
+                        <p className="text-zinc-500">Für personalisierte Inhalte</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+              
+              <button 
+                onClick={() => setShowDetails(!showDetails)}
+                className="text-sm text-zinc-500 hover:text-black mt-3 underline underline-offset-2"
+                data-testid="cookie-details-toggle"
+              >
+                {showDetails ? 'Weniger anzeigen' : 'Mehr erfahren'}
+              </button>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+              <button
+                onClick={handleAcceptEssential}
+                className="px-6 py-3 text-sm font-semibold tracking-wide border border-zinc-300 hover:border-black transition-colors"
+                data-testid="cookie-accept-essential"
+              >
+                Nur Essenzielle
+              </button>
+              <button
+                onClick={handleAcceptAll}
+                className="btn-primary px-6 py-3 text-sm font-semibold tracking-wide"
+                data-testid="cookie-accept-all"
+              >
+                Alle akzeptieren
+              </button>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
 
 // Header Component
 const Header = () => {
@@ -33,8 +171,8 @@ const Header = () => {
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'header-blur bg-white/80 border-b border-black/5' : 'bg-transparent'}`}
     >
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex justify-between items-center py-4">
-        <a href="/" className="font-heading font-black text-2xl tracking-tighter uppercase" data-testid="logo">
-          WILDWAVE
+        <a href="/" className="block" data-testid="header-logo">
+          <Logo />
         </a>
 
         {/* Desktop Nav */}
@@ -299,17 +437,10 @@ const Services = () => {
   );
 };
 
-// Statistics Section
-const Statistics = () => {
+// About Section (without statistics)
+const About = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-
-  const stats = [
-    { number: '50+', label: 'Erfolgreiche Projekte' },
-    { number: '30+', label: 'Zufriedene Kunden' },
-    { number: '5+', label: 'Jahre Erfahrung' },
-    { number: '100%', label: 'Engagement' }
-  ];
 
   return (
     <section id="about" className="py-24 md:py-32 relative" ref={ref}>
@@ -329,7 +460,7 @@ const Statistics = () => {
             />
           </motion.div>
 
-          {/* Stats */}
+          {/* Content */}
           <div>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -352,27 +483,31 @@ const Statistics = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-base md:text-lg leading-relaxed text-zinc-600 mb-12"
+              className="text-base md:text-lg leading-relaxed text-zinc-600 mb-8"
             >
               Von der ersten Idee bis zur erfolgreichen Online-Präsenz – wir begleiten Sie auf dem gesamten Weg. 
               Mit Leidenschaft und Expertise schaffen wir digitale Lösungen, die Ihr Unternehmen voranbringen.
             </motion.p>
-
-            <div className="grid grid-cols-2 gap-8">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                >
-                  <p className="font-heading text-5xl md:text-6xl font-black tracking-tighter" data-testid={`stat-${index}`}>
-                    {stat.number}
-                  </p>
-                  <p className="text-sm tracking-[0.15em] uppercase text-zinc-500 mt-2">{stat.label}</p>
-                </motion.div>
-              ))}
-            </div>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-base md:text-lg leading-relaxed text-zinc-600 mb-8"
+            >
+              Als Digitalagentur in Zürich verbinden wir kreatives Design mit technischer Exzellenz. 
+              Wir verstehen die Bedürfnisse von Schweizer Unternehmen und liefern massgeschneiderte Lösungen.
+            </motion.p>
+            <motion.a
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              href="tel:+41782630406"
+              className="btn-primary px-8 py-4 text-sm font-bold tracking-widest uppercase inline-flex items-center justify-center gap-3"
+              data-testid="about-cta"
+            >
+              <Phone size={18} strokeWidth={1.5} />
+              Jetzt Kontakt aufnehmen
+            </motion.a>
           </div>
         </div>
       </div>
@@ -557,8 +692,8 @@ const Footer = () => {
       <div className="max-w-[1440px] mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-2">
-            <a href="/" className="font-heading font-black text-3xl tracking-tighter uppercase block mb-6" data-testid="footer-logo">
-              WILDWAVE
+            <a href="/" className="block mb-6" data-testid="footer-logo">
+              <Logo light={true} />
             </a>
             <p className="text-zinc-400 leading-relaxed max-w-sm">
               Ihre Digitalagentur in Zürich. Webdesign, SEO und Marketing – alles aus einer Hand.
@@ -609,10 +744,11 @@ function App() {
       <main>
         <Hero />
         <Services />
-        <Statistics />
+        <About />
         <Contact />
       </main>
       <Footer />
+      <CookieBanner />
     </div>
   );
 }
