@@ -1,0 +1,135 @@
+{
+  "theme": "light",
+  "archetype": "Archetype 4: Swiss & High-Contrast",
+  "typography": {
+    "fonts": {
+      "heading": "Outfit, sans-serif",
+      "body": "Manrope, sans-serif"
+    },
+    "scale": {
+      "h1": "text-5xl md:text-6xl lg:text-8xl tracking-tighter font-black uppercase leading-none",
+      "h2": "text-4xl md:text-5xl tracking-tight font-bold",
+      "h3": "text-2xl md:text-3xl tracking-tight font-semibold",
+      "body": "text-base md:text-lg leading-relaxed text-zinc-600",
+      "label": "text-xs tracking-[0.2em] uppercase font-semibold text-zinc-500"
+    },
+    "rules": [
+      "No generic sans for headings, must strictly use Outfit with tight tracking.",
+      "Labels and overlines must be extremely small, uppercase, with wide letter spacing.",
+      "Never center-align large paragraphs of text. Left align for structural tension."
+    ]
+  },
+  "colors": {
+    "background": {
+      "primary": "#FFFFFF",
+      "secondary": "#FAFAFA",
+      "tertiary": "#F4F4F5"
+    },
+    "text": {
+      "primary": "#0A0A0A",
+      "secondary": "#52525B",
+      "inverse": "#FFFFFF"
+    },
+    "accent": {
+      "primary": "#FF3B30",
+      "primary_hover": "#D92D24",
+      "border": "#E4E4E7"
+    },
+    "rules": [
+      "Color is strictly for function. 95% of the UI must be black, white, and grey.",
+      "Use Signal Red (#FF3B30) exclusively for primary CTAs and interactive hover states."
+    ]
+  },
+  "layout_and_spacing": {
+    "container": "max-w-[1440px] mx-auto px-6 md:px-12",
+    "section_gap": "py-24 md:py-32",
+    "bento_grid": {
+      "container": "grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6",
+      "card_padding": "p-8 md:p-12"
+    },
+    "rules": [
+      "Extreme whitespace: double standard padding between sections.",
+      "Use strict geometric grid layouts but with asymmetrical spans (e.g. 8-col and 4-col splits)."
+    ]
+  },
+  "components": {
+    "header": {
+      "style": "fixed top-0 w-full z-50 backdrop-blur-xl bg-white/80 border-b border-black/5",
+      "layout": "flex justify-between items-center py-4 px-6 md:px-12",
+      "brand": "font-black text-2xl tracking-tighter uppercase"
+    },
+    "hero": {
+      "style": "min-h-[90vh] flex flex-col justify-center pt-32",
+      "content": "Massive typography animating in. A stark minimalist visual layout.",
+      "image_treatment": "Abstract geometric image placed inside an asymmetrical bento box container, NOT full screen."
+    },
+    "services_bento": {
+      "style": "grid-cols-1 md:grid-cols-3 gap-6",
+      "card_style": "bg-secondary border border-border/50 hover:border-black transition-colors duration-300 group rounded-none"
+    },
+    "statistics": {
+      "number_style": "text-6xl md:text-8xl font-black tracking-tighter",
+      "label_style": "text-sm tracking-[0.2em] uppercase text-zinc-500 mt-2"
+    },
+    "contact_form": {
+      "input_style": "border-0 border-b border-zinc-300 bg-transparent rounded-none px-0 py-4 focus:ring-0 focus:border-black text-lg w-full transition-colors",
+      "button": "bg-black text-white px-8 py-4 hover:bg-accent hover:text-white transition-colors uppercase tracking-widest text-sm font-bold w-full md:w-auto"
+    },
+    "footer": {
+      "style": "bg-black text-white py-24",
+      "layout": "grid grid-cols-1 md:grid-cols-4 gap-12",
+      "massive_text": "text-[12vw] leading-none font-black tracking-tighter col-span-full border-t border-white/20 pt-12 mt-12"
+    }
+  },
+  "motion": {
+    "scroll": "MANDATORY: Install and configure @studio-freight/react-lenis for premium smooth scroll physics.",
+    "animations": [
+      "Framer Motion for entrance staggers on the hero typography.",
+      "Hover states: arrow icons on service cards translate slightly right and turn red on group-hover.",
+      "Parallax: Subtle y-axis translation on images during scroll."
+    ]
+  },
+  "media": {
+    "images": [
+      {
+        "category": "hero_visual",
+        "url": "https://images.pexels.com/photos/1029622/pexels-photo-1029622.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Clean white abstract architecture",
+        "instructions": "Place in the right column or bento box of the hero section. Do not use as a full-screen blanket background."
+      },
+      {
+        "category": "services_bg",
+        "url": "https://images.unsplash.com/photo-1622579521534-8252f7da47fd?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDV8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwbW9kZXJuJTIwb2ZmaWNlJTIwZGVza3xlbnwwfHx8fDE3NzY0NTM3NDZ8MA&ixlib=rb-4.1.0&q=85",
+        "alt": "Minimalist desk with pencils",
+        "instructions": "Use for a visual break section or as a subdued background image for the 'Marketing' or 'Agency' info box."
+      },
+      {
+        "category": "abstract_structure",
+        "url": "https://images.unsplash.com/photo-1610496571096-8367bdbbae2b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODF8MHwxfHNlYXJjaHwyfHxtaW5pbWFsaXN0JTIwYWJzdHJhY3QlMjBhcmNoaXRlY3R1cmUlMjB3aGl0ZXxlbnwwfHx8fDE3NzY0NTM3NDZ8MA&ixlib=rb-4.1.0&q=85",
+        "alt": "Black and white concrete building",
+        "instructions": "Use in the Statistics section or About section to enforce the Swiss design structural feel."
+      }
+    ],
+    "icons": "Use lucide-react with stroke-width 1.5 for a sharp, technical look."
+  },
+  "content_requirements": {
+    "company_info": {
+      "name": "WILDWAVE",
+      "address": "Im Isengrind 35, 8046 Zürich",
+      "phone": "+41 78 263 04 06",
+      "services": ["Webdesign", "SEO", "Marketing"]
+    }
+  },
+  "testing": {
+    "requirements": "ALL interactive elements (buttons, nav links, form inputs, submit buttons) MUST have a unique `data-testid` attribute in kebab-case."
+  },
+  "instructions_to_main_agent": [
+    "Install `lucide-react`, `framer-motion`, `@studio-freight/react-lenis`, and Shadcn UI components (form, input, textarea).",
+    "Construct layout entirely with HTML/Tailwind; avoid Shadcn layout wrappers.",
+    "Ensure all fonts are imported properly in `index.css` via Google Fonts (`Outfit` and `Manrope`).",
+    "Use strict minimalist 'Swiss' styling: 1px borders, massive typography, heavy contrast, no rounded corners (rounded-none).",
+    "The Contact Form should be functional in UI with validation but look extremely minimalist (border-bottom only, no boxes).",
+    "Hero should be extremely impactful. Huge text: 'WE BUILD DIGITAL EXPERIENCES'.",
+    "Never guess images. Use ONLY the URLs provided in the media section."
+  ]
+}
