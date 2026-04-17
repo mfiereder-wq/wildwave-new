@@ -9,16 +9,12 @@ const API = `${BACKEND_URL}/api`;
 
 // Professional Logo Component
 const Logo = ({ className = "", light = false }) => (
-  <div className={`flex items-center gap-2 ${className}`} data-testid="logo">
-    <div className={`relative w-10 h-10 ${light ? 'bg-white' : 'bg-black'}`}>
-      <div className={`absolute inset-1 ${light ? 'bg-black' : 'bg-white'}`}>
-        <div className={`absolute top-1 left-1 w-2 h-2 ${light ? 'bg-white' : 'bg-black'}`}></div>
-        <div className={`absolute bottom-1 right-1 w-3 h-1 ${light ? 'bg-[#FF3B30]' : 'bg-[#FF3B30]'}`}></div>
-      </div>
-    </div>
-    <span className={`font-heading font-black text-2xl tracking-tighter uppercase ${light ? 'text-white' : 'text-black'}`}>
-      WILDWAVE
-    </span>
+  <div className={`flex items-center gap-3 ${className}`} data-testid="logo">
+    <img 
+      src="https://customer-assets.emergentagent.com/job_site-refresh-126/artifacts/wsghz2sf_WebCraft_Solutions_-_1_20260323_005319_0000.png" 
+      alt="WildWave Logo"
+      className={`h-10 w-auto ${light ? 'brightness-0 invert' : ''}`}
+    />
   </div>
 );
 
@@ -68,17 +64,6 @@ const ImpressumModal = ({ isOpen, onClose }) => {
             <div>
               <h3 className="font-heading font-semibold text-black mb-2">Vertretungsberechtigte Person</h3>
               <p>Geschäftsführer: [Name einfügen]</p>
-            </div>
-
-            <div>
-              <h3 className="font-heading font-semibold text-black mb-2">Handelsregistereintrag</h3>
-              <p>Eingetragen im Handelsregister des Kantons Zürich</p>
-              <p>UID: CHE-XXX.XXX.XXX</p>
-            </div>
-
-            <div>
-              <h3 className="font-heading font-semibold text-black mb-2">Mehrwertsteuernummer</h3>
-              <p>CHE-XXX.XXX.XXX MWST</p>
             </div>
 
             <div>
@@ -531,8 +516,8 @@ const Hero = () => {
               <video
                 autoPlay
                 loop
-                muted
                 playsInline
+                controls
                 className="w-full h-full object-cover"
                 data-testid="hero-video"
               >
