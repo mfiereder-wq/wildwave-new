@@ -718,36 +718,17 @@ const About = () => {
 const Contact = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    try {
-      await axios.post(`${API}/contact`, formData);
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', phone: '', message: '' });
-    } catch (error) {
-      console.error('Contact form error:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  // Load Elfsight script
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://elfsightcdn.com/platform.js';
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <section id="contact" className="py-24 md:py-32 bg-[#FAFAFA]" ref={ref}>
@@ -795,86 +776,14 @@ const Contact = () => {
             </div>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* Elfsight Contact Form */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
+            data-testid="contact-form"
           >
-            <form onSubmit={handleSubmit} className="space-y-8" data-testid="contact-form">
-              <div>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Ihr Name *"
-                  required
-                  className="form-input"
-                  data-testid="contact-name-input"
-                />
-              </div>
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Ihre E-Mail *"
-                  required
-                  className="form-input"
-                  data-testid="contact-email-input"
-                />
-              </div>
-              <div>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="Ihre Telefonnummer"
-                  className="form-input"
-                  data-testid="contact-phone-input"
-                />
-              </div>
-              <div>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Ihre Nachricht *"
-                  required
-                  rows={4}
-                  className="form-input resize-none"
-                  data-testid="contact-message-input"
-                />
-              </div>
-
-              {submitStatus === 'success' && (
-                <p className="text-green-600 text-sm" data-testid="contact-success-message">
-                  Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.
-                </p>
-              )}
-              {submitStatus === 'error' && (
-                <p className="text-red-600 text-sm" data-testid="contact-error-message">
-                  Es gab einen Fehler. Bitte versuchen Sie es erneut.
-                </p>
-              )}
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="btn-primary px-8 py-4 text-sm font-bold tracking-widest uppercase inline-flex items-center justify-center gap-3 w-full md:w-auto disabled:opacity-50"
-                data-testid="contact-submit-btn"
-              >
-                {isSubmitting ? 'Wird gesendet...' : (
-                  <>
-                    Nachricht senden
-                    <Send size={18} strokeWidth={1.5} />
-                  </>
-                )}
-              </button>
-            </form>
+            <div className="elfsight-app-1b9ff00c-3d11-45dc-80a5-06d6a2a7c9c8" data-elfsight-app-lazy></div>
           </motion.div>
         </div>
       </div>
