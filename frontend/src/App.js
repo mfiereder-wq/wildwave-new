@@ -1,52 +1,618 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import { useState, useEffect, useRef } from 'react';
+import '@/App.css';
+import axios from 'axios';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { Phone, MapPin, ArrowRight, Menu, X, Send, Palette, TrendingUp, Megaphone, Code } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
+// Header Component
+const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    helloWorldApi();
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMobileMenuOpen(false);
+  };
+
   return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
+    <header
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'header-blur bg-white/80 border-b border-black/5' : 'bg-transparent'}`}
+    >
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex justify-between items-center py-4">
+        <a href="/" className="font-heading font-black text-2xl tracking-tighter uppercase" data-testid="logo">
+          WILDWAVE
         </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
+
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-8">
+          <button
+            onClick={() => scrollToSection('services')}
+            className="text-sm tracking-wide hover:text-[#FF3B30] transition-colors"
+            data-testid="nav-services"
+          >
+            Services
+          </button>
+          <button
+            onClick={() => scrollToSection('about')}
+            className="text-sm tracking-wide hover:text-[#FF3B30] transition-colors"
+            data-testid="nav-about"
+          >
+            Über uns
+          </button>
+          <button
+            onClick={() => scrollToSection('contact')}
+            className="text-sm tracking-wide hover:text-[#FF3B30] transition-colors"
+            data-testid="nav-contact"
+          >
+            Kontakt
+          </button>
+          <a
+            href="tel:+41782630406"
+            className="btn-primary px-6 py-3 text-sm font-semibold tracking-widest uppercase"
+            data-testid="nav-call-btn"
+          >
+            Anrufen
+          </a>
+        </nav>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden p-2"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          data-testid="mobile-menu-toggle"
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="md:hidden bg-white border-t border-black/5 py-6 px-6"
+        >
+          <nav className="flex flex-col gap-4">
+            <button onClick={() => scrollToSection('services')} className="text-left py-2 text-lg" data-testid="mobile-nav-services">Services</button>
+            <button onClick={() => scrollToSection('about')} className="text-left py-2 text-lg" data-testid="mobile-nav-about">Über uns</button>
+            <button onClick={() => scrollToSection('contact')} className="text-left py-2 text-lg" data-testid="mobile-nav-contact">Kontakt</button>
+            <a href="tel:+41782630406" className="btn-primary px-6 py-3 text-sm font-semibold tracking-widest uppercase text-center mt-4" data-testid="mobile-call-btn">Anrufen</a>
+          </nav>
+        </motion.div>
+      )}
+    </header>
   );
 };
 
+// Hero Component
+const Hero = () => {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end start']
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
+
+  return (
+    <section ref={containerRef} className="min-h-screen flex flex-col justify-center pt-24 md:pt-32 pb-16 md:pb-24 relative overflow-hidden">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Text Content */}
+          <div className="lg:col-span-7">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-xs tracking-[0.2em] uppercase font-semibold text-zinc-500 mb-6"
+            >
+              Digitalagentur Zürich
+            </motion.p>
+            
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="font-heading text-5xl md:text-6xl lg:text-8xl tracking-tighter font-black uppercase leading-none mb-8"
+              data-testid="hero-title"
+            >
+              Wir bauen<br />
+              <span className="text-[#FF3B30]">digitale</span><br />
+              Erlebnisse
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-base md:text-lg leading-relaxed text-zinc-600 max-w-xl mb-10"
+            >
+              Webdesign, SEO und Marketing – massgeschneidert für Ihr Unternehmen. 
+              Wir schaffen digitale Lösungen, die begeistern und konvertieren.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="flex flex-col sm:flex-row gap-4"
+            >
+              <a
+                href="tel:+41782630406"
+                className="btn-primary px-8 py-4 text-sm font-bold tracking-widest uppercase inline-flex items-center justify-center gap-3"
+                data-testid="hero-call-btn"
+              >
+                <Phone size={18} strokeWidth={1.5} />
+                Jetzt anrufen
+              </a>
+              <button
+                onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                className="px-8 py-4 text-sm font-bold tracking-widest uppercase border border-black hover:bg-black hover:text-white transition-colors inline-flex items-center justify-center gap-3"
+                data-testid="hero-services-btn"
+              >
+                Unsere Services
+                <ArrowRight size={18} strokeWidth={1.5} />
+              </button>
+            </motion.div>
+          </div>
+
+          {/* Hero Image */}
+          <motion.div
+            style={{ y }}
+            className="lg:col-span-5 relative"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="aspect-[4/5] bg-zinc-100 overflow-hidden"
+            >
+              <img
+                src="https://images.pexels.com/photos/1029622/pexels-photo-1029622.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                alt="Modern architecture"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+            
+            {/* Floating badge */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="absolute -left-6 bottom-12 bg-white shadow-xl p-6 hidden lg:block"
+            >
+              <p className="text-xs tracking-[0.2em] uppercase text-zinc-500 mb-2">Standort</p>
+              <p className="font-heading font-bold">Im Isengrind 35</p>
+              <p className="text-zinc-600">8046 Zürich</p>
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Service Icons Strip */}
+      <div className="mt-16 md:mt-24 border-t border-b border-zinc-200 py-8 overflow-hidden">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+          <div className="flex justify-between items-center gap-8 md:gap-16">
+            <ServiceIcon icon={<Palette size={24} strokeWidth={1.5} />} label="Webdesign" />
+            <ServiceIcon icon={<TrendingUp size={24} strokeWidth={1.5} />} label="SEO" />
+            <ServiceIcon icon={<Megaphone size={24} strokeWidth={1.5} />} label="Marketing" />
+            <ServiceIcon icon={<Code size={24} strokeWidth={1.5} />} label="Development" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const ServiceIcon = ({ icon, label }) => (
+  <div className="flex items-center gap-3 text-zinc-600">
+    {icon}
+    <span className="hidden sm:block text-sm font-medium">{label}</span>
+  </div>
+);
+
+// Services Section
+const Services = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  const services = [
+    {
+      icon: <Palette size={32} strokeWidth={1.5} />,
+      title: 'Webdesign',
+      description: 'Zeitloses Design trifft auf moderne Technologie. Wir erstellen Websites, die begeistern und konvertieren.',
+      features: ['Responsive Design', 'UI/UX Optimierung', 'Corporate Identity', 'Mobile First']
+    },
+    {
+      icon: <TrendingUp size={32} strokeWidth={1.5} />,
+      title: 'SEO',
+      description: 'Sichtbarkeit, die zählt. Wir bringen Sie nach oben – organisch, nachhaltig und messbar.',
+      features: ['On-Page SEO', 'Technisches SEO', 'Content Strategy', 'Analytics & Reporting']
+    },
+    {
+      icon: <Megaphone size={32} strokeWidth={1.5} />,
+      title: 'Marketing',
+      description: 'Strategien, die wirken. Von Social Media bis Content Marketing – wir erreichen Ihre Zielgruppe.',
+      features: ['Social Media Marketing', 'Content Creation', 'PPC Kampagnen', 'Email Marketing']
+    }
+  ];
+
+  return (
+    <section id="services" className="py-24 md:py-32 bg-[#FAFAFA]" ref={ref}>
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
+        >
+          <p className="text-xs tracking-[0.2em] uppercase font-semibold text-zinc-500 mb-4">Was wir tun</p>
+          <h2 className="font-heading text-4xl md:text-5xl tracking-tight font-bold" data-testid="services-title">
+            Services für Ihren<br />digitalen Erfolg
+          </h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {services.map((service, index) => (
+            <motion.div
+              key={service.title}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              className="service-card bg-white border border-zinc-200 p-8 md:p-10 group cursor-pointer"
+              data-testid={`service-card-${service.title.toLowerCase()}`}
+            >
+              <div className="mb-6 text-zinc-800">{service.icon}</div>
+              <h3 className="font-heading text-2xl md:text-3xl tracking-tight font-semibold mb-4">{service.title}</h3>
+              <p className="text-base leading-relaxed text-zinc-600 mb-6">{service.description}</p>
+              <ul className="space-y-2 mb-8">
+                {service.features.map((feature) => (
+                  <li key={feature} className="text-sm text-zinc-500 flex items-center gap-2">
+                    <span className="w-1 h-1 bg-[#FF3B30] rounded-full"></span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide">
+                Mehr erfahren
+                <ArrowRight size={16} strokeWidth={1.5} className="arrow-icon" />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Statistics Section
+const Statistics = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  const stats = [
+    { number: '50+', label: 'Erfolgreiche Projekte' },
+    { number: '30+', label: 'Zufriedene Kunden' },
+    { number: '5+', label: 'Jahre Erfahrung' },
+    { number: '100%', label: 'Engagement' }
+  ];
+
+  return (
+    <section id="about" className="py-24 md:py-32 relative" ref={ref}>
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+          {/* Image */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="aspect-square bg-zinc-100 overflow-hidden"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1610496571096-8367bdbbae2b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODF8MHwxfHNlYXJjaHwyfHxtaW5pbWFsaXN0JTIwYWJzdHJhY3QlMjBhcmNoaXRlY3R1cmUlMjB3aGl0ZXxlbnwwfHx8fDE3NzY0NTM3NDZ8MA&ixlib=rb-4.1.0&q=85"
+              alt="Modern architecture"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+
+          {/* Stats */}
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6 }}
+              className="text-xs tracking-[0.2em] uppercase font-semibold text-zinc-500 mb-4"
+            >
+              Über WILDWAVE
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="font-heading text-4xl md:text-5xl tracking-tight font-bold mb-8"
+              data-testid="about-title"
+            >
+              Ihr Partner für<br />digitalen Erfolg
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-base md:text-lg leading-relaxed text-zinc-600 mb-12"
+            >
+              Von der ersten Idee bis zur erfolgreichen Online-Präsenz – wir begleiten Sie auf dem gesamten Weg. 
+              Mit Leidenschaft und Expertise schaffen wir digitale Lösungen, die Ihr Unternehmen voranbringen.
+            </motion.p>
+
+            <div className="grid grid-cols-2 gap-8">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+                >
+                  <p className="font-heading text-5xl md:text-6xl font-black tracking-tighter" data-testid={`stat-${index}`}>
+                    {stat.number}
+                  </p>
+                  <p className="text-sm tracking-[0.15em] uppercase text-zinc-500 mt-2">{stat.label}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Contact Section
+const Contact = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      await axios.post(`${API}/contact`, formData);
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', phone: '', message: '' });
+    } catch (error) {
+      console.error('Contact form error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <section id="contact" className="py-24 md:py-32 bg-[#FAFAFA]" ref={ref}>
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+          {/* Contact Info */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="text-xs tracking-[0.2em] uppercase font-semibold text-zinc-500 mb-4">Kontakt</p>
+            <h2 className="font-heading text-4xl md:text-5xl tracking-tight font-bold mb-8" data-testid="contact-title">
+              Lassen Sie uns<br />zusammenarbeiten
+            </h2>
+            <p className="text-base md:text-lg leading-relaxed text-zinc-600 mb-12">
+              Haben Sie ein Projekt im Sinn? Wir freuen uns darauf, von Ihnen zu hören. 
+              Rufen Sie uns an oder schreiben Sie uns – wir melden uns umgehend zurück.
+            </p>
+
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-black flex items-center justify-center">
+                  <Phone size={20} strokeWidth={1.5} className="text-white" />
+                </div>
+                <div>
+                  <p className="text-xs tracking-[0.2em] uppercase text-zinc-500 mb-1">Telefon</p>
+                  <a href="tel:+41782630406" className="font-heading text-xl font-semibold hover:text-[#FF3B30] transition-colors" data-testid="contact-phone">
+                    +41 78 263 04 06
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-black flex items-center justify-center">
+                  <MapPin size={20} strokeWidth={1.5} className="text-white" />
+                </div>
+                <div>
+                  <p className="text-xs tracking-[0.2em] uppercase text-zinc-500 mb-1">Adresse</p>
+                  <p className="font-heading text-xl font-semibold" data-testid="contact-address">
+                    Im Isengrind 35<br />8046 Zürich
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <form onSubmit={handleSubmit} className="space-y-8" data-testid="contact-form">
+              <div>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Ihr Name *"
+                  required
+                  className="form-input"
+                  data-testid="contact-name-input"
+                />
+              </div>
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Ihre E-Mail *"
+                  required
+                  className="form-input"
+                  data-testid="contact-email-input"
+                />
+              </div>
+              <div>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="Ihre Telefonnummer"
+                  className="form-input"
+                  data-testid="contact-phone-input"
+                />
+              </div>
+              <div>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Ihre Nachricht *"
+                  required
+                  rows={4}
+                  className="form-input resize-none"
+                  data-testid="contact-message-input"
+                />
+              </div>
+
+              {submitStatus === 'success' && (
+                <p className="text-green-600 text-sm" data-testid="contact-success-message">
+                  Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.
+                </p>
+              )}
+              {submitStatus === 'error' && (
+                <p className="text-red-600 text-sm" data-testid="contact-error-message">
+                  Es gab einen Fehler. Bitte versuchen Sie es erneut.
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="btn-primary px-8 py-4 text-sm font-bold tracking-widest uppercase inline-flex items-center justify-center gap-3 w-full md:w-auto disabled:opacity-50"
+                data-testid="contact-submit-btn"
+              >
+                {isSubmitting ? 'Wird gesendet...' : (
+                  <>
+                    Nachricht senden
+                    <Send size={18} strokeWidth={1.5} />
+                  </>
+                )}
+              </button>
+            </form>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Footer
+const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="bg-black text-white py-16 md:py-24">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          <div className="md:col-span-2">
+            <a href="/" className="font-heading font-black text-3xl tracking-tighter uppercase block mb-6" data-testid="footer-logo">
+              WILDWAVE
+            </a>
+            <p className="text-zinc-400 leading-relaxed max-w-sm">
+              Ihre Digitalagentur in Zürich. Webdesign, SEO und Marketing – alles aus einer Hand.
+            </p>
+          </div>
+
+          <div>
+            <p className="text-xs tracking-[0.2em] uppercase font-semibold text-zinc-500 mb-4">Kontakt</p>
+            <div className="space-y-3">
+              <a href="tel:+41782630406" className="block text-white hover:text-[#FF3B30] transition-colors" data-testid="footer-phone">
+                +41 78 263 04 06
+              </a>
+              <p className="text-zinc-400">Im Isengrind 35<br />8046 Zürich</p>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs tracking-[0.2em] uppercase font-semibold text-zinc-500 mb-4">Navigation</p>
+            <div className="space-y-3">
+              <button onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })} className="block text-white hover:text-[#FF3B30] transition-colors" data-testid="footer-nav-services">Services</button>
+              <button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="block text-white hover:text-[#FF3B30] transition-colors" data-testid="footer-nav-about">Über uns</button>
+              <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="block text-white hover:text-[#FF3B30] transition-colors" data-testid="footer-nav-contact">Kontakt</button>
+            </div>
+          </div>
+        </div>
+
+        {/* Large branding text */}
+        <div className="border-t border-white/20 pt-12">
+          <p className="font-heading text-[10vw] md:text-[8vw] leading-none font-black tracking-tighter opacity-20">
+            WILDWAVE
+          </p>
+        </div>
+
+        <div className="mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-zinc-500 text-sm">© {currentYear} WILDWAVE. Alle Rechte vorbehalten.</p>
+          <p className="text-zinc-500 text-sm">Zürich, Schweiz</p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+// Main App
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <Header />
+      <main>
+        <Hero />
+        <Services />
+        <Statistics />
+        <Contact />
+      </main>
+      <Footer />
     </div>
   );
 }

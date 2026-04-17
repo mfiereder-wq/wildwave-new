@@ -1,34 +1,171 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Hero Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.App-link {
-    color: #61dafb;
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.7s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.6s ease-out forwards;
+}
+
+/* Stagger delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+
+/* Initially hidden for animation */
+.animate-on-scroll {
+  opacity: 0;
+}
+
+/* Service card hover */
+.service-card {
+  transition: all 0.3s ease;
+}
+
+.service-card:hover {
+  border-color: #0A0A0A;
+}
+
+.service-card:hover .arrow-icon {
+  transform: translateX(8px);
+  color: #FF3B30;
+}
+
+.arrow-icon {
+  transition: all 0.3s ease;
+}
+
+/* Form input styling */
+.form-input {
+  border: none;
+  border-bottom: 1px solid #E4E4E7;
+  background: transparent;
+  padding: 1rem 0;
+  font-size: 1.125rem;
+  width: 100%;
+  transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+  border-bottom-color: #0A0A0A;
+}
+
+.form-input::placeholder {
+  color: #A1A1AA;
+}
+
+/* Button hover */
+.btn-primary {
+  background: #0A0A0A;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #FF3B30;
+}
+
+/* Stat counter animation */
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Image parallax container */
+.parallax-container {
+  overflow: hidden;
+}
+
+.parallax-image {
+  transition: transform 0.1s linear;
+}
+
+/* Header backdrop */
+.header-blur {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+/* Hide scrollbar for marquee */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
