@@ -8,16 +8,12 @@
 2. **Priorität**: Hero-Bereich & erster Eindruck
 3. **Zusätzliche Funktion**: Kontaktformular
 
-## Nachfolgende Anforderungen (Iteration 2)
-- Statistik-Sektion entfernen (50+, 30+, 5+, 100%)
-- Cookie-Banner nach Schweizer Datenschutzgesetz (DSG) hinzufügen
-- Logo professioneller gestalten
-
 ## Company Info
 - **Name**: WILDWAVE
 - **Type**: Digitalagentur
 - **Location**: Im Isengrind 35, 8046 Zürich, Schweiz
 - **Phone**: +41 78 263 04 06
+- **Email**: info@wildwave.ch
 - **Services**: Webdesign, SEO, Marketing
 
 ## Tech Stack
@@ -40,16 +36,27 @@
 - ✅ Statistics section removed
 - ✅ Swiss DSG compliant cookie banner with localStorage persistence
 - ✅ Professional logo with geometric icon element
-- ✅ Redesigned "Über uns" section
+
+### Iteration 3 (2026-04-17)
+- ✅ Video im Hero-Bereich (ersetzt Bild)
+- ✅ Impressum Modal (Swiss DSG compliant)
+- ✅ Datenschutzerklärung Modal
+
+### Iteration 4 (2026-04-17)
+- ✅ Neues Logo-Bild (WildWave W-Icon)
+- ✅ Video mit Ton abspielbar (controls, nicht muted)
+- ✅ Impressum vereinfacht (UID/Mehrwertsteuer entfernt)
 
 ## Core Features
-1. **Header**: Fixed navigation with professional logo
-2. **Hero**: Large typography, CTA buttons, hero image
+1. **Header**: Fixed navigation with WildWave logo
+2. **Hero**: Large typography, CTA buttons, video with sound
 3. **Services**: 3 service cards with features list
 4. **Über uns**: Company description with image
 5. **Contact**: Form with validation, API integration
-6. **Footer**: Company info, navigation, branding
+6. **Footer**: Company info, navigation, Impressum/Datenschutz links
 7. **Cookie Banner**: DSG compliant with consent management
+8. **Impressum**: Legal information modal
+9. **Datenschutzerklärung**: Privacy policy modal
 
 ## API Endpoints
 - `POST /api/contact` - Submit contact form

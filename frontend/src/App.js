@@ -521,7 +521,7 @@ const Hero = () => {
                 className="w-full h-full object-cover"
                 data-testid="hero-video"
               >
-                <source src="https://customer-assets.emergentagent.com/job_site-refresh-126/artifacts/li3udtdo_VID-20260309-WA00003.mp4" type="video/mp4" />
+                <source src="https://customer-assets.emergentagent.com/job_site-refresh-126/artifacts/zi0lj0ys_2026_03_23_14_30_482.webm" type="video/webm" />
               </video>
             </motion.div>
             
