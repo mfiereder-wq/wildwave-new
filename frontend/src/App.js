@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import '@/App.css';
 import axios from 'axios';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
-import { Phone, MapPin, ArrowRight, Menu, X, Send, Palette, TrendingUp, Megaphone, Code, Cookie, Shield } from 'lucide-react';
+import { Phone, MapPin, ArrowRight, Menu, X, Send, Palette, TrendingUp, Megaphone, Code, Cookie, Shield, FileText } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -22,7 +22,216 @@ const Logo = ({ className = "", light = false }) => (
   </div>
 );
 
-// Cookie Banner Component (Swiss DSG compliant)
+// Impressum Modal
+const ImpressumModal = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[200] bg-black/50 flex items-center justify-center p-4"
+        onClick={onClose}
+        data-testid="impressum-modal-overlay"
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          className="bg-white max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+          onClick={e => e.stopPropagation()}
+          data-testid="impressum-modal"
+        >
+          <div className="sticky top-0 bg-white border-b border-zinc-200 px-8 py-6 flex justify-between items-center">
+            <h2 className="font-heading text-2xl font-bold">Impressum</h2>
+            <button onClick={onClose} className="p-2 hover:bg-zinc-100 transition-colors" data-testid="impressum-close-btn">
+              <X size={24} />
+            </button>
+          </div>
+          <div className="px-8 py-6 space-y-6 text-zinc-600">
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2">Angaben gemäss Art. 3 DSG</h3>
+              <p>WILDWAVE</p>
+              <p>Im Isengrind 35</p>
+              <p>8046 Zürich</p>
+              <p>Schweiz</p>
+            </div>
+
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2">Kontakt</h3>
+              <p>Telefon: +41 78 263 04 06</p>
+              <p>E-Mail: info@wildwave.ch</p>
+            </div>
+
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2">Vertretungsberechtigte Person</h3>
+              <p>Geschäftsführer: [Name einfügen]</p>
+            </div>
+
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2">Handelsregistereintrag</h3>
+              <p>Eingetragen im Handelsregister des Kantons Zürich</p>
+              <p>UID: CHE-XXX.XXX.XXX</p>
+            </div>
+
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2">Mehrwertsteuernummer</h3>
+              <p>CHE-XXX.XXX.XXX MWST</p>
+            </div>
+
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2">Haftungsausschluss</h3>
+              <p className="text-sm leading-relaxed">
+                Der Autor übernimmt keine Gewähr für die Richtigkeit, Genauigkeit, Aktualität, 
+                Zuverlässigkeit und Vollständigkeit der Informationen. Haftungsansprüche gegen 
+                den Autor wegen Schäden materieller oder immaterieller Art, die aus dem Zugriff 
+                oder der Nutzung bzw. Nichtnutzung der veröffentlichten Informationen, durch 
+                Missbrauch der Verbindung oder durch technische Störungen entstanden sind, 
+                werden ausgeschlossen.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2">Urheberrechte</h3>
+              <p className="text-sm leading-relaxed">
+                Die Urheber- und alle anderen Rechte an Inhalten, Bildern, Fotos oder anderen 
+                Dateien auf dieser Website gehören ausschliesslich WILDWAVE oder den speziell 
+                genannten Rechteinhabern. Für die Reproduktion jeglicher Elemente ist die 
+                schriftliche Zustimmung des Urheberrechtsträgers im Voraus einzuholen.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+
+// Datenschutz Modal
+const DatenschutzModal = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[200] bg-black/50 flex items-center justify-center p-4"
+        onClick={onClose}
+        data-testid="datenschutz-modal-overlay"
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          className="bg-white max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+          onClick={e => e.stopPropagation()}
+          data-testid="datenschutz-modal"
+        >
+          <div className="sticky top-0 bg-white border-b border-zinc-200 px-8 py-6 flex justify-between items-center">
+            <h2 className="font-heading text-2xl font-bold">Datenschutzerklärung</h2>
+            <button onClick={onClose} className="p-2 hover:bg-zinc-100 transition-colors" data-testid="datenschutz-close-btn">
+              <X size={24} />
+            </button>
+          </div>
+          <div className="px-8 py-6 space-y-6 text-zinc-600 text-sm leading-relaxed">
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2 text-base">1. Allgemeines</h3>
+              <p>
+                Gestützt auf Artikel 13 der schweizerischen Bundesverfassung und die datenschutzrechtlichen 
+                Bestimmungen des Bundes (Datenschutzgesetz, DSG) hat jede Person Anspruch auf Schutz ihrer 
+                Privatsphäre sowie auf Schutz vor Missbrauch ihrer persönlichen Daten. WILDWAVE hält diese 
+                Bestimmungen ein.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2 text-base">2. Verantwortliche Stelle</h3>
+              <p>Verantwortlich für die Datenbearbeitung auf dieser Website:</p>
+              <p className="mt-2">WILDWAVE<br />Im Isengrind 35<br />8046 Zürich<br />info@wildwave.ch</p>
+            </div>
+
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2 text-base">3. Erhebung und Verarbeitung von Daten</h3>
+              <p>
+                Wenn Sie unsere Webseite besuchen, speichern unsere Server temporär jeden Zugriff in einer 
+                Protokolldatei. Folgende Daten werden dabei ohne Ihr Zutun erfasst und bis zur automatisierten 
+                Löschung gespeichert:
+              </p>
+              <ul className="list-disc ml-6 mt-2 space-y-1">
+                <li>IP-Adresse des anfragenden Rechners</li>
+                <li>Datum und Uhrzeit des Zugriffs</li>
+                <li>Name und URL der abgerufenen Datei</li>
+                <li>Website, von der aus der Zugriff erfolgt</li>
+                <li>Verwendeter Browser und Betriebssystem</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2 text-base">4. Cookies</h3>
+              <p>
+                Diese Website verwendet Cookies. Bei Cookies handelt es sich um kleine Textdateien, 
+                die mit Hilfe des Browsers auf Ihrem Endgerät abgelegt werden. Sie können Ihren Browser 
+                so einstellen, dass Sie über das Setzen von Cookies informiert werden und einzeln über 
+                deren Annahme entscheiden oder die Annahme von Cookies für bestimmte Fälle oder generell 
+                ausschliessen können.
+              </p>
+              <p className="mt-2">Wir verwenden:</p>
+              <ul className="list-disc ml-6 mt-2 space-y-1">
+                <li><strong>Essenzielle Cookies:</strong> Notwendig für die Grundfunktionen der Website</li>
+                <li><strong>Analyse-Cookies:</strong> Helfen uns, die Nutzung der Website zu verstehen</li>
+                <li><strong>Marketing-Cookies:</strong> Ermöglichen personalisierte Werbung</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2 text-base">5. Kontaktformular</h3>
+              <p>
+                Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem 
+                Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung 
+                der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben 
+                wir nicht ohne Ihre Einwilligung weiter.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2 text-base">6. Ihre Rechte</h3>
+              <p>Sie haben jederzeit das Recht:</p>
+              <ul className="list-disc ml-6 mt-2 space-y-1">
+                <li>Auskunft über Ihre bei uns gespeicherten Daten zu erhalten</li>
+                <li>Diese Daten berichtigen oder löschen zu lassen</li>
+                <li>Die Einschränkung der Verarbeitung zu verlangen</li>
+                <li>Der Verarbeitung zu widersprechen</li>
+                <li>Die Datenübertragbarkeit zu verlangen</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2 text-base">7. Datensicherheit</h3>
+              <p>
+                Wir setzen technische und organisatorische Sicherheitsmassnahmen ein, um Ihre Daten 
+                gegen zufällige oder vorsätzliche Manipulationen, Verlust, Zerstörung oder gegen den 
+                Zugriff unberechtigter Personen zu schützen.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-heading font-semibold text-black mb-2 text-base">8. Änderungen</h3>
+              <p>
+                Wir können diese Datenschutzerklärung jederzeit ohne Vorankündigung anpassen. 
+                Es gilt die jeweils aktuelle, auf unserer Website publizierte Fassung.
+              </p>
+              <p className="mt-4 text-zinc-500">Stand: Januar 2026</p>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
 const CookieBanner = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
@@ -237,7 +446,7 @@ const Header = () => {
   );
 };
 
-// Hero Component
+// Hero Component with Video
 const Hero = () => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -308,7 +517,7 @@ const Hero = () => {
             </motion.div>
           </div>
 
-          {/* Hero Image */}
+          {/* Hero Video */}
           <motion.div
             style={{ y }}
             className="lg:col-span-5 relative"
@@ -317,13 +526,18 @@ const Hero = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="aspect-[4/5] bg-zinc-100 overflow-hidden"
+              className="aspect-[4/5] bg-zinc-900 overflow-hidden"
             >
-              <img
-                src="https://images.pexels.com/photos/1029622/pexels-photo-1029622.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                alt="Modern architecture"
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
                 className="w-full h-full object-cover"
-              />
+                data-testid="hero-video"
+              >
+                <source src="https://customer-assets.emergentagent.com/job_site-refresh-126/artifacts/li3udtdo_VID-20260309-WA00003.mp4" type="video/mp4" />
+              </video>
             </motion.div>
             
             {/* Floating badge */}
@@ -684,7 +898,7 @@ const Contact = () => {
 };
 
 // Footer
-const Footer = () => {
+const Footer = ({ onOpenImpressum, onOpenDatenschutz }) => {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -729,7 +943,22 @@ const Footer = () => {
 
         <div className="mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-zinc-500 text-sm">© {currentYear} WILDWAVE. Alle Rechte vorbehalten.</p>
-          <p className="text-zinc-500 text-sm">Zürich, Schweiz</p>
+          <div className="flex items-center gap-6">
+            <button 
+              onClick={onOpenImpressum}
+              className="text-zinc-500 text-sm hover:text-white transition-colors"
+              data-testid="footer-impressum-link"
+            >
+              Impressum
+            </button>
+            <button 
+              onClick={onOpenDatenschutz}
+              className="text-zinc-500 text-sm hover:text-white transition-colors"
+              data-testid="footer-datenschutz-link"
+            >
+              Datenschutz
+            </button>
+          </div>
         </div>
       </div>
     </footer>
@@ -738,6 +967,9 @@ const Footer = () => {
 
 // Main App
 function App() {
+  const [showImpressum, setShowImpressum] = useState(false);
+  const [showDatenschutz, setShowDatenschutz] = useState(false);
+
   return (
     <div className="App">
       <Header />
@@ -747,8 +979,13 @@ function App() {
         <About />
         <Contact />
       </main>
-      <Footer />
+      <Footer 
+        onOpenImpressum={() => setShowImpressum(true)} 
+        onOpenDatenschutz={() => setShowDatenschutz(true)} 
+      />
       <CookieBanner />
+      <ImpressumModal isOpen={showImpressum} onClose={() => setShowImpressum(false)} />
+      <DatenschutzModal isOpen={showDatenschutz} onClose={() => setShowDatenschutz(false)} />
     </div>
   );
 }
