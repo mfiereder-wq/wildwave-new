@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import '@/App.css';
-import axios from 'axios';
+import './App.css';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
-import { Phone, MapPin, ArrowRight, Menu, X, Send, Palette, TrendingUp, Megaphone, Code, Cookie, Shield, FileText } from 'lucide-react';
+import { Phone, MapPin, ArrowRight, Menu, X, Palette, TrendingUp, Megaphone, Code, Cookie, Shield } from 'lucide-react';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 const API = `${BACKEND_URL}/api`;
 
 // Professional Logo Component
