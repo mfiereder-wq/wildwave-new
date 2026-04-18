@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WILDWAVE — Webdesign • SEO • Marketing | Zürich</title>
+    <meta name="description" content="WILDWAVE - Ihre Digitalagentur in Zürich. Professionelles Webdesign, SEO-Optimierung und Marketing für Unternehmen.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #FAFAFA;
+            --text-primary: #0A0A0A;
+            --text-secondary: #52525B;
+            --accent: #FF3B30;
+            --accent-hover: #D92D24;
+            --border: #E4E4E7;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 48px;
+            }
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+        }
+
+        @media (min-width: 768px) {
+            .header-inner {
+                padding: 16px 48px;
+            }
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav {
+            display: none;
+            align-items: center;
+            gap: 32px;
+        }
+
+        @media (min-width: 768px) {
+            .nav {
+                display: flex;
+            }
+        }
+
+        .nav a {
+            font-size: 14px;
+            letter-spacing: 0.02em;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: var(--accent);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 32px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--text-primary);
+            color: white;
+        }
+
+        .btn-small {
+            padding: 12px 24px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: block;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            z-index: 99;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 12px 0;
+            font-size: 18px;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 120px;
+            padding-bottom: 64px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 7fr 5fr;
+                gap: 48px;
+            }
+        }
+
+        .hero-label {
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 10vw, 96px);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            margin-bottom: 32px;
+        }
+
+        .hero-title span {
+            color: var(--accent);
+        }
+
+        .hero-text {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .hero-video-wrapper {
+            position: relative;
+        }
+
+        .hero-video {
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            background: #1a1a1a;
+        }
+
+        .hero-badge {
+            position: absolute;
+            left: -24px;
+            bottom: 48px;
+            background: white;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-badge {
+                display: block;
+            }
+        }
+
+        .hero-badge-label {
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .hero-badge-text {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        /* Service Strip */
+        .service-strip {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 32px 0;
+            margin-top: 64px;
+        }
+
+        .service-strip-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 32px;
+            overflow-x: auto;
+        }
+
+        .service-icon {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .service-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .service-icon span {
+            display: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        @media (min-width: 640px) {
+            .service-icon span {
+                display: block;
+            }
+        }
+
+        /* Sections */
+        .section {
+            padding: 96px 0;
+        }
+
+        @media (min-width: 768px) {
+            .section {
+                padding: 128px 0;
+            }
+        }
+
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 32px;
+        }
+
+        /* Services */
+        .services {
+            background: var(--bg-secondary);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        @media (min-width: 768px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .service-card {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 32px;
+            transition: border-color 0.3s;
+        }
+
+        @media (min-width: 768px) {
+            .service-card {
+                padding: 40px;
+            }
+        }
+
+        .service-card:hover {
+            border-color: var(--text-primary);
+        }
+
+        .service-card-icon {
+            margin-bottom: 24px;
+        }
+
+        .service-card-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .service-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .service-card ul {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .service-card li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .service-card li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .service-card-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .service-card:hover .service-card-link svg {
+            transform: translateX(8px);
+            color: var(--accent);
+        }
+
+        .service-card-link svg {
+            transition: all 0.3s;
+        }
+
+        /* About */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            .about-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 96px;
+            }
+        }
+
+        .about-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+        }
+
+        .about-text {
+            color: var(--text-secondary);
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        /* Contact */
+        .contact {
+            background: var(--bg-secondary);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 64px;
+        }
+
+        @media (min-width: 1024px) {
+            .contact-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 96px;
+            }
+        }
+
+        .contact-text {
+            color: var(--text-secondary);
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 48px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .contact-item-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-item-icon svg {
+            width: 20px;
+            height: 20px;
+            color: white;
+        }
+
+        .contact-item-label {
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .contact-item-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .contact-item-value a:hover {
+            color: var(--accent);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-primary);
+            color: white;
+            padding: 64px 0;
+        }
+
+        @media (min-width: 768px) {
+            .footer {
+                padding: 96px 0;
+            }
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 48px;
+            margin-bottom: 64px;
+        }
+
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 2fr 1fr 1fr;
+            }
+        }
+
+        .footer-logo {
+            height: 40px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            margin-bottom: 24px;
+        }
+
+        .footer-text {
+            color: #a1a1aa;
+            max-width: 360px;
+            line-height: 1.7;
+        }
+
+        .footer-title {
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #71717a;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            color: white;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-brand {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 48px;
+            margin-top: 48px;
+        }
+
+        .footer-brand-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(60px, 10vw, 120px);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            opacity: 0.2;
+            line-height: 1;
+        }
+
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (min-width: 768px) {
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .footer-copyright {
+            color: #71717a;
+            font-size: 14px;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-legal a {
+            color: #71717a;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-legal a:hover {
+            color: white;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            max-width: 640px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .modal-close:hover {
+            background: var(--bg-secondary);
+        }
+
+        .modal-content {
+            padding: 24px 32px;
+        }
+
+        .modal-content h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            margin-bottom: 8px;
+            margin-top: 24px;
+        }
+
+        .modal-content h3:first-child {
+            margin-top: 0;
+        }
+
+        .modal-content p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .modal-content ul {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-left: 24px;
+            margin-top: 8px;
+        }
+
+        /* Cookie Banner */
+        .cookie-banner {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+            z-index: 150;
+            padding: 24px;
+        }
+
+        .cookie-banner.active {
+            display: block;
+        }
+
+        .cookie-inner {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        @media (min-width: 1024px) {
+            .cookie-inner {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+
+        .cookie-content h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .cookie-content p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 640px;
+        }
+
+        .cookie-buttons {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+
+        /* Service Info Modals */
+        .service-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            backdrop-filter: blur(4px);
+        }
+
+        .service-modal-overlay.active {
+            display: flex;
+        }
+
+        .service-modal {
+            background: white;
+            max-width: 580px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: fadeInUp 0.3s ease forwards;
+        }
+
+        .service-modal-header {
+            padding: 32px 40px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1;
+        }
+
+        .service-modal-icon {
+            width: 52px;
+            height: 52px;
+            background: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .service-modal-icon svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        .service-modal-title-group {
+            flex: 1;
+        }
+
+        .service-modal-label {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .service-modal-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .service-modal-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .service-modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .service-modal-body {
+            padding: 32px 40px 40px;
+        }
+
+        .service-modal-desc {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 32px;
+        }
+
+        .service-modal-features {
+            margin-bottom: 32px;
+        }
+
+        .service-modal-features-title {
+            font-size: 12px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .service-modal-feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .service-modal-feature-item:last-child {
+            border-bottom: none;
+        }
+
+        .service-modal-feature-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        .service-modal-feature-text strong {
+            display: block;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .service-modal-feature-text span {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .service-modal-cta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="#">
+                <img src="https://customer-assets.emergentagent.com/job_site-refresh-126/artifacts/wsghz2sf_WebCraft_Solutions_-_1_20260323_005319_0000.png" alt="WildWave" class="logo">
+            </a>
+            <nav class="nav">
+                <a href="#services">Services</a>
+                <a href="#about">Über uns</a>
+                <a href="#contact">Kontakt</a>
+                <a href="tel:+41782630406" class="btn btn-primary btn-small">Anrufen</a>
+            </nav>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#services" onclick="toggleMobileMenu()">Services</a>
+        <a href="#about" onclick="toggleMobileMenu()">Über uns</a>
+        <a href="#contact" onclick="toggleMobileMenu()">Kontakt</a>
+        <a href="tel:+41782630406" class="btn btn-primary" style="margin-top: 16px; width: 100%;">Anrufen</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <p class="hero-label animate">Digitalagentur Zürich</p>
+                    <h1 class="hero-title animate delay-1">
+                        Wir bauen<br>
+                        <span>digitale</span><br>
+                        Erlebnisse
+                    </h1>
+                    <p class="hero-text animate delay-2">
+                        Webdesign, SEO und Marketing – massgeschneidert für Ihr Unternehmen. 
+                        Wir schaffen digitale Lösungen, die begeistern und konvertieren.
+                    </p>
+                    <div class="hero-buttons animate delay-3">
+                        <a href="tel:+41782630406" class="btn btn-primary">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            Jetzt anrufen
+                        </a>
+                        <a href="#services" class="btn btn-outline">
+                            Unsere Services
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-video-wrapper animate delay-4">
+                    <video class="hero-video" autoplay loop playsinline controls>
+                        <source src="https://customer-assets.emergentagent.com/job_site-refresh-126/artifacts/zi0lj0ys_2026_03_23_14_30_482.webm" type="video/webm">
+                    </video>
+                    <div class="hero-badge">
+                        <p class="hero-badge-label">Standort</p>
+                        <p class="hero-badge-text">Im Isengrind 35</p>
+                        <p style="color: var(--text-secondary);">8046 Zürich</p>
+                    </div>
+                </div>
+            </div>
+            <div class="service-strip">
+                <div class="service-strip-inner">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"></path>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                            <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                            <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                        </svg>
+                        <span>Webdesign</span>
+                    </div>
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                            <polyline points="17 6 23 6 23 12"></polyline>
+                        </svg>
+                        <span>SEO</span>
+                    </div>
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <span>Marketing</span>
+                    </div>
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                        <span>Development</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section services" id="services">
+        <div class="container">
+            <p class="section-label">Was wir tun</p>
+            <h2 class="section-title">Services für Ihren<br>digitalen Erfolg</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                            <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                            <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                        </svg>
+                    </div>
+                    <h3>Webdesign</h3>
+                    <p>Zeitloses Design trifft auf moderne Technologie. Wir erstellen Websites, die begeistern und konvertieren.</p>
+                    <ul>
+                        <li>Responsive Design</li>
+                        <li>UI/UX Optimierung</li>
+                        <li>Corporate Identity</li>
+                        <li>Mobile First</li>
+                    </ul>
+                    <div class="service-card-link" onclick="openServiceModal('webdesign')" style="cursor:pointer;">
+                        Mehr erfahren
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                            <polyline points="17 6 23 6 23 12"></polyline>
+                        </svg>
+                    </div>
+                    <h3>SEO</h3>
+                    <p>Sichtbarkeit, die zählt. Wir bringen Sie nach oben – organisch, nachhaltig und messbar.</p>
+                    <ul>
+                        <li>On-Page SEO</li>
+                        <li>Technisches SEO</li>
+                        <li>Content Strategy</li>
+                        <li>Analytics & Reporting</li>
+                    </ul>
+                    <div class="service-card-link" onclick="openServiceModal('seo')" style="cursor:pointer;">
+                        Mehr erfahren
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3>Marketing</h3>
+                    <p>Strategien, die wirken. Von Social Media bis Content Marketing – wir erreichen Ihre Zielgruppe.</p>
+                    <ul>
+                        <li>Social Media Marketing</li>
+                        <li>Content Creation</li>
+                        <li>PPC Kampagnen</li>
+                        <li>Email Marketing</li>
+                    </ul>
+                    <div class="service-card-link" onclick="openServiceModal('marketing')" style="cursor:pointer;">
+                        Mehr erfahren
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <img src="https://images.unsplash.com/photo-1610496571096-8367bdbbae2b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODF8MHwxfHNlYXJjaHwyfHxtaW5pbWFsaXN0JTIwYWJzdHJhY3QlMjBhcmNoaXRlY3R1cmUlMjB3aGl0ZXxlbnwwfHx8fDE3NzY0NTM3NDZ8MA&ixlib=rb-4.1.0&q=85" alt="Modern Architecture" class="about-image">
+                <div>
+                    <p class="section-label">Über WILDWAVE</p>
+                    <h2 class="section-title">Ihr Partner für<br>digitalen Erfolg</h2>
+                    <p class="about-text">
+                        Von der ersten Idee bis zur erfolgreichen Online-Präsenz – wir begleiten Sie auf dem gesamten Weg. 
+                        Mit Leidenschaft und Expertise schaffen wir digitale Lösungen, die Ihr Unternehmen voranbringen.
+                    </p>
+                    <p class="about-text">
+                        Als Digitalagentur in Zürich verbinden wir kreatives Design mit technischer Exzellenz. 
+                        Wir verstehen die Bedürfnisse von Schweizer Unternehmen und liefern massgeschneiderte Lösungen.
+                    </p>
+                    <a href="tel:+41782630406" class="btn btn-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Jetzt Kontakt aufnehmen
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div>
+                    <p class="section-label">Kontakt</p>
+                    <h2 class="section-title">Lassen Sie uns<br>zusammenarbeiten</h2>
+                    <p class="contact-text">
+                        Haben Sie ein Projekt im Sinn? Wir freuen uns darauf, von Ihnen zu hören. 
+                        Rufen Sie uns an oder schreiben Sie uns – wir melden uns umgehend zurück.
+                    </p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-item-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="contact-item-label">Telefon</p>
+                                <p class="contact-item-value"><a href="tel:+41782630406">+41 78 263 04 06</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="contact-item-label">Adresse</p>
+                                <p class="contact-item-value">Im Isengrind 35<br>8046 Zürich</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <!-- Elfsight Contact Form -->
+                    <script src="https://elfsightcdn.com/platform.js" async></script>
+                    <div class="elfsight-app-1b9ff00c-3d11-45dc-80a5-06d6a2a7c9c8" data-elfsight-app-lazy></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <img src="https://customer-assets.emergentagent.com/job_site-refresh-126/artifacts/wsghz2sf_WebCraft_Solutions_-_1_20260323_005319_0000.png" alt="WildWave" class="footer-logo">
+                    <p class="footer-text">Ihre Digitalagentur in Zürich. Webdesign, SEO und Marketing – alles aus einer Hand.</p>
+                </div>
+                <div>
+                    <p class="footer-title">Kontakt</p>
+                    <div class="footer-links">
+                        <a href="tel:+41782630406">+41 78 263 04 06</a>
+                        <p style="color: #a1a1aa;">Im Isengrind 35<br>8046 Zürich</p>
+                    </div>
+                </div>
+                <div>
+                    <p class="footer-title">Navigation</p>
+                    <div class="footer-links">
+                        <a href="#services">Services</a>
+                        <a href="#about">Über uns</a>
+                        <a href="#contact">Kontakt</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-brand">
+                <p class="footer-brand-text">WILDWAVE</p>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2026 WILDWAVE. Alle Rechte vorbehalten.</p>
+                <div class="footer-legal">
+                    <a href="#" onclick="openModal('impressum'); return false;">Impressum</a>
+                    <a href="#" onclick="openModal('datenschutz'); return false;">Datenschutz</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Impressum Modal -->
+    <div class="modal-overlay" id="impressumModal" onclick="closeModal('impressum')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title">Impressum</h2>
+                <button class="modal-close" onclick="closeModal('impressum')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content">
+                <h3>Angaben gemäss Art. 3 DSG</h3>
+                <p>WILDWAVE<br>Im Isengrind 35<br>8046 Zürich<br>Schweiz</p>
+                
+                <h3>Kontakt</h3>
+                <p>Telefon: +41 78 263 04 06<br>E-Mail: info@wildwave.ch</p>
+                
+                <h3>Vertretungsberechtigte Person</h3>
+                <p>Geschäftsführer: Marco Amadeus</p>
+                
+                <h3>Haftungsausschluss</h3>
+                <p>Der Autor übernimmt keine Gewähr für die Richtigkeit, Genauigkeit, Aktualität, Zuverlässigkeit und Vollständigkeit der Informationen. Haftungsansprüche gegen den Autor wegen Schäden materieller oder immaterieller Art, die aus dem Zugriff oder der Nutzung bzw. Nichtnutzung der veröffentlichten Informationen, durch Missbrauch der Verbindung oder durch technische Störungen entstanden sind, werden ausgeschlossen.</p>
+                
+                <h3>Urheberrechte</h3>
+                <p>Die Urheber- und alle anderen Rechte an Inhalten, Bildern, Fotos oder anderen Dateien auf dieser Website gehören ausschliesslich WILDWAVE oder den speziell genannten Rechteinhabern. Für die Reproduktion jeglicher Elemente ist die schriftliche Zustimmung des Urheberrechtsträgers im Voraus einzuholen.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Datenschutz Modal -->
+    <div class="modal-overlay" id="datenschutzModal" onclick="closeModal('datenschutz')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title">Datenschutzerklärung</h2>
+                <button class="modal-close" onclick="closeModal('datenschutz')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content">
+                <h3>1. Allgemeines</h3>
+                <p>Gestützt auf Artikel 13 der schweizerischen Bundesverfassung und die datenschutzrechtlichen Bestimmungen des Bundes (Datenschutzgesetz, DSG) hat jede Person Anspruch auf Schutz ihrer Privatsphäre sowie auf Schutz vor Missbrauch ihrer persönlichen Daten. WILDWAVE hält diese Bestimmungen ein.</p>
+                
+                <h3>2. Verantwortliche Stelle</h3>
+                <p>Verantwortlich für die Datenbearbeitung auf dieser Website:</p>
+                <p>WILDWAVE<br>Im Isengrind 35<br>8046 Zürich<br>info@wildwave.ch</p>
+                
+                <h3>3. Erhebung und Verarbeitung von Daten</h3>
+                <p>Wenn Sie unsere Webseite besuchen, speichern unsere Server temporär jeden Zugriff in einer Protokolldatei. Folgende Daten werden dabei ohne Ihr Zutun erfasst und bis zur automatisierten Löschung gespeichert:</p>
+                <ul>
+                    <li>IP-Adresse des anfragenden Rechners</li>
+                    <li>Datum und Uhrzeit des Zugriffs</li>
+                    <li>Name und URL der abgerufenen Datei</li>
+                    <li>Website, von der aus der Zugriff erfolgt</li>
+                    <li>Verwendeter Browser und Betriebssystem</li>
+                </ul>
+                
+                <h3>4. Cookies</h3>
+                <p>Diese Website verwendet Cookies. Bei Cookies handelt es sich um kleine Textdateien, die mit Hilfe des Browsers auf Ihrem Endgerät abgelegt werden.</p>
+                
+                <h3>5. Kontaktformular</h3>
+                <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert.</p>
+                
+                <h3>6. Ihre Rechte</h3>
+                <p>Sie haben jederzeit das Recht auf Auskunft über Ihre gespeicherten Daten, deren Berichtigung oder Löschung.</p>
+                
+                <p style="margin-top: 24px; color: #71717a;">Stand: Januar 2026</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-inner">
+            <div class="cookie-content">
+                <h3>Datenschutz-Einstellungen</h3>
+                <p>Wir verwenden Cookies und ähnliche Technologien, um Ihnen ein optimales Nutzererlebnis zu bieten. Gemäss dem Schweizer Datenschutzgesetz (DSG) informieren wir Sie transparent über die Datenverarbeitung.</p>
+            </div>
+            <div class="cookie-buttons">
+                <button class="btn btn-outline btn-small" onclick="acceptCookies('essential')">Nur Essenzielle</button>
+                <button class="btn btn-primary btn-small" onclick="acceptCookies('all')">Alle akzeptieren</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Info Modals -->
+
+    <!-- Webdesign Modal -->
+    <div class="service-modal-overlay" id="serviceModal-webdesign" onclick="closeServiceModal('webdesign')">
+        <div class="service-modal" onclick="event.stopPropagation()">
+            <div class="service-modal-header">
+                <div style="display:flex;align-items:center;gap:16px;flex:1;">
+                    <div class="service-modal-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                            <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                            <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                        </svg>
+                    </div>
+                    <div class="service-modal-title-group">
+                        <p class="service-modal-label">Service</p>
+                        <h3 class="service-modal-title">Webdesign</h3>
+                    </div>
+                </div>
+                <button class="service-modal-close" onclick="closeServiceModal('webdesign')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="service-modal-body">
+                <p class="service-modal-desc">Wir gestalten Websites, die nicht nur schön aussehen, sondern auch messbare Ergebnisse liefern. Modernes Design kombiniert mit technischer Exzellenz – für einen ersten Eindruck, der bleibt.</p>
+                <div class="service-modal-features">
+                    <p class="service-modal-features-title">Unsere Leistungen</p>
+                    <div class="service-modal-feature-item">
+                        <div class="service-modal-feature-dot"></div>
+                        <div class="service-modal-feature-text">
+                            <strong>Responsive Design</strong>
+                            <span>Ihre Website sieht auf jedem Gerät – Smartphone, Tablet oder Desktop – perfekt aus.</span>
+                        </div>
+                    </div>
+                    <div class="service-modal-feature-item">
+                        <div class="service-modal-feature-dot"></div>
+                        <div class="service-modal-feature-text">
+                            <strong>UI/UX Optimierung</strong>
+                            <span>Intuitive Navigation und durchdachte Benutzerführung für maximale Conversion.</span>
+                        </div>
+                    </div>
+                    <div class="service-modal-feature-item">
+                        <div class="service-modal-feature-dot"></div>
+                        <div class="service-modal-feature-text">
+                            <strong>Corporate Identity</strong>
+                            <span>Ihr Markenauftritt wird konsistent und professionell über alle digitalen Kanäle umgesetzt.</span>
+                        </div>
+                    </div>
+                    <div class="service-modal-feature-item">
+                        <div class="service-modal-feature-dot"></div>
+                        <div class="service-modal-feature-text">
+                            <strong>Mobile First</strong>
+                            <span>Entwicklung nach dem Mobile-First-Prinzip für optimale Performance auf allen Endgeräten.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-modal-cta">
+                    <a href="tel:+41782630406" class="btn btn-primary btn-small">Jetzt anfragen</a>
+                    <button class="btn btn-outline btn-small" onclick="closeServiceModal('webdesign')">Schliessen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Modal -->
+    <div class="service-modal-overlay" id="serviceModal-seo" onclick="closeServiceModal('seo')">
+        <div class="service-modal" onclick="event.stopPropagation()">
+            <div class="service-modal-header">
+                <div style="display:flex;align-items:center;gap:16px;flex:1;">
+                    <div class="service-modal-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                            <polyline points="17 6 23 6 23 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="service-modal-title-group">
+                        <p class="service-modal-label">Service</p>
+                        <h3 class="service-modal-title">SEO</h3>
+                    </div>
+                </div>
+                <button class="service-modal-close" onclick="closeServiceModal('seo')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="service-modal-body">
+                <p class="service-modal-desc">Mehr Sichtbarkeit, mehr Besucher, mehr Kunden. Unsere SEO-Strategie bringt Ihre Website nachhaltig nach oben – organisch und ohne teure Werbeanzeigen.</p>
+                <div class="service-modal-features">
+                    <p class="service-modal-features-title">Unsere Leistungen</p>
+                    <div class="service-modal-feature-item">
+                        <div class="service-modal-feature-dot"></div>
+                        <div class="service-modal-feature-text">
+                            <strong>On-Page SEO</strong>
+                            <span>Optimierung von Texten, Titles, Meta-Descriptions und interner Verlinkung für maximale Relevanz.</span>
+                        </div>
+                    </div>
+                    <div class="service-modal-feature-item">
+                        <div class="service-modal-feature-dot"></div>
+                        <div class="service-modal-feature-text">
+                            <strong>Technisches SEO</strong>
+                            <span>Ladezeiten, Core Web Vitals, strukturierte Daten und technische Fehler werden gezielt behoben.</span>
+                        </div>
+                    </div>
+                    <div class="service-modal-feature-item">
+                        <div class="service-modal-feature-dot"></div>
+                        <div class="service-modal-feature-text">
+                            <strong>Content Strategy</strong>
+                            <span>Keyword-Recherche und Inhaltsstrategie, die Ihre Zielgruppe genau dort abholt, wo sie sucht.</span>
+                        </div>
+                    </div>
+                    <div class="service-modal-feature-item">
+                        <div class="service-modal-feature-dot"></div>
+                        <div class="service-modal-feature-text">
+                            <strong>Analytics & Reporting</strong>
+                            <span>Transparente Berichte und klare KPIs – Sie sehen genau, was unsere Arbeit bringt.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-modal-cta">
+                    <a href="tel:+41782630406" class="btn btn-primary btn-small">Jetzt anfragen</a>
+                    <button class="btn btn-outline btn-small" onclick="closeServiceModal('seo')">Schliessen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Marketing Modal -->
+    <div class="service-modal-overlay" id="serviceModal-marketing" onclick="closeServiceModal('marketing')">
+        <div class="service-modal" onclick="event.stopPropagation()">
+            <div class="service-modal-header">
+                <div style="display:flex;align-items:center;gap:16px;flex:1;">
+                    <div class="service-modal-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="service-modal-title-group">
+                        <p class="service-modal-label">Service</p>
+                        <h3 class="service-modal-title">Marketing</h3>
+                    </div>
+                </div>
+                <button class="service-modal-close" onclick="closeServiceModal('marketing')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="service-modal-body">
+                <p class="service-modal-desc">Reichweite, die zählt. Wir entwickeln Marketingstrategien, die Ihre Zielgruppe wirklich erreichen – von Social Media bis zu gezielten Kampagnen mit messbarem ROI.</p>
+                <div class="service-modal-features">
+                    <p class="service-modal-features-title">Unsere Leistungen</p>
+                    <div class="service-modal-feature-item">
+                        <div class="service-modal-feature-dot"></div>
+                        <div class="service-modal-feature-text">
+                            <strong>Social Media Marketing</strong>
+                            <span>Professionelle Betreuung Ihrer Social-Media-Kanäle für mehr Engagement und Followerwachstum.</span>
+                        </div>
+                    </div>
+                    <div class="service-modal-feature-item">
+                        <div class="service-modal-feature-dot"></div>
+                        <div class="service-modal-feature-text">
+                            <strong>Content Creation</strong>
+                            <span>Hochwertige Texte, Grafiken und Videos, die Ihre Marke zum Leben erwecken.</span>
+                        </div>
+                    </div>
+                    <div class="service-modal-feature-item">
+                        <div class="service-modal-feature-dot"></div>
+                        <div class="service-modal-feature-text">
+                            <strong>PPC Kampagnen</strong>
+                            <span>Google Ads und bezahlte Kampagnen mit präzisem Targeting für maximalen Return on Investment.</span>
+                        </div>
+                    </div>
+                    <div class="service-modal-feature-item">
+                        <div class="service-modal-feature-dot"></div>
+                        <div class="service-modal-feature-text">
+                            <strong>Email Marketing</strong>
+                            <span>Automatisierte Newsletter-Kampagnen, die Ihre Kundenbindung stärken und Umsatz generieren.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="service-modal-cta">
+                    <a href="tel:+41782630406" class="btn btn-primary btn-small">Jetzt anfragen</a>
+                    <button class="btn btn-outline btn-small" onclick="closeServiceModal('marketing')">Schliessen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Menu
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+
+        // Modals (Impressum / Datenschutz)
+        function openModal(type) {
+            document.getElementById(type + 'Modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(type) {
+            document.getElementById(type + 'Modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Service Info Modals
+        function openServiceModal(type) {
+            document.getElementById('serviceModal-' + type).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeServiceModal(type) {
+            document.getElementById('serviceModal-' + type).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Cookie Banner
+        function checkCookieConsent() {
+            if (!localStorage.getItem('wildwave_cookie_consent')) {
+                document.getElementById('cookieBanner').classList.add('active');
+            }
+        }
+
+        function acceptCookies(type) {
+            localStorage.setItem('wildwave_cookie_consent', JSON.stringify({
+                type: type,
+                timestamp: new Date().toISOString()
+            }));
+            document.getElementById('cookieBanner').classList.remove('active');
+        }
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal('impressum');
+                closeModal('datenschutz');
+                closeServiceModal('webdesign');
+                closeServiceModal('seo');
+                closeServiceModal('marketing');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            checkCookieConsent();
+        });
+    </script>
+</body>
+</html>
