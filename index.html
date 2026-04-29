@@ -28,6 +28,7 @@
 
         html {
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         body {
@@ -35,6 +36,7 @@
             background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -245,6 +247,16 @@
             gap: 16px;
         }
 
+        @media (max-width: 480px) {
+            .hero-buttons {
+                flex-direction: column;
+            }
+            .hero-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
         .hero-video-wrapper {
             position: relative;
         }
@@ -299,6 +311,13 @@
             align-items: center;
             gap: 32px;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+        }
+
+        .service-strip-inner::-webkit-scrollbar {
+            display: none;
         }
 
         .service-icon {
@@ -667,8 +686,9 @@
 
         .contact-item-value {
             font-family: 'Outfit', sans-serif;
-            font-size: 20px;
+            font-size: clamp(16px, 4vw, 20px);
             font-weight: 600;
+            word-break: break-word;
         }
 
         .contact-item-value a:hover {
@@ -820,11 +840,17 @@
             position: sticky;
             top: 0;
             background: white;
-            padding: 24px 32px;
+            padding: 20px;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        @media (min-width: 480px) {
+            .modal-header {
+                padding: 24px 32px;
+            }
         }
 
         .modal-title {
@@ -845,7 +871,13 @@
         }
 
         .modal-content {
-            padding: 24px 32px;
+            padding: 20px;
+        }
+
+        @media (min-width: 480px) {
+            .modal-content {
+                padding: 24px 32px;
+            }
         }
 
         .modal-content h3 {
@@ -924,6 +956,18 @@
             display: flex;
             gap: 12px;
             flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 480px) {
+            .cookie-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            .cookie-buttons .btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
         /* Animations */
@@ -955,10 +999,17 @@
             inset: 0;
             background: rgba(0, 0, 0, 0.6);
             z-index: 200;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
-            padding: 24px;
+            padding: 0;
             backdrop-filter: blur(4px);
+        }
+
+        @media (min-width: 480px) {
+            .service-modal-overlay {
+                align-items: center;
+                padding: 24px;
+            }
         }
 
         .service-modal-overlay.active {
@@ -973,10 +1024,18 @@
             overflow-y: auto;
             position: relative;
             animation: fadeInUp 0.3s ease forwards;
+            border-radius: 16px 16px 0 0;
+        }
+
+        @media (min-width: 480px) {
+            .service-modal {
+                border-radius: 0;
+                max-height: 90vh;
+            }
         }
 
         .service-modal-header {
-            padding: 32px 40px 24px;
+            padding: 24px 20px 20px;
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: flex-start;
@@ -986,6 +1045,12 @@
             top: 0;
             background: white;
             z-index: 1;
+        }
+
+        @media (min-width: 480px) {
+            .service-modal-header {
+                padding: 32px 40px 24px;
+            }
         }
 
         .service-modal-icon {
@@ -1038,7 +1103,13 @@
         }
 
         .service-modal-body {
-            padding: 32px 40px 40px;
+            padding: 24px 20px 28px;
+        }
+
+        @media (min-width: 480px) {
+            .service-modal-body {
+                padding: 32px 40px 40px;
+            }
         }
 
         .service-modal-desc {
@@ -1099,6 +1170,224 @@
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
+        }
+
+        @media (max-width: 480px) {
+            .service-modal-cta {
+                flex-direction: column;
+            }
+            .service-modal-cta .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Pricing */
+        .pricing {
+            background: var(--bg-secondary);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        @media (min-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: repeat(3, 1fr);
+                align-items: start;
+            }
+        }
+
+        .pricing-card {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 36px 32px 32px;
+            position: relative;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--text-primary);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+
+        .pricing-card.featured {
+            background: var(--text-primary);
+            border-color: var(--text-primary);
+            color: white;
+        }
+
+        .pricing-card.featured:hover {
+            box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+        }
+
+        .pricing-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            margin-bottom: 20px;
+        }
+
+        .pricing-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 8px;
+        }
+
+        .pricing-card.featured .pricing-name {
+            color: white;
+        }
+
+        .pricing-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        .pricing-card.featured .pricing-desc {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .pricing-price {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pricing-card.featured .pricing-price {
+            border-bottom-color: rgba(255,255,255,0.15);
+        }
+
+        .pricing-currency {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .pricing-card.featured .pricing-currency {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .pricing-amount {
+            font-family: 'Outfit', sans-serif;
+            font-size: 56px;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .pricing-period {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .pricing-card.featured .pricing-period {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .pricing-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .pricing-card.featured .pricing-feature {
+            color: rgba(255,255,255,0.75);
+        }
+
+        .pricing-feature-icon {
+            width: 18px;
+            height: 18px;
+            background: rgba(255,59,48,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .pricing-card.featured .pricing-feature-icon {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .pricing-feature-icon svg {
+            width: 10px;
+            height: 10px;
+            color: var(--accent);
+        }
+
+        .pricing-card.featured .pricing-feature-icon svg {
+            color: white;
+        }
+
+        .pricing-cta {
+            width: 100%;
+            text-align: center;
+        }
+
+        .pricing-card.featured .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .pricing-card.featured .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .pricing-guarantees {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px 40px;
+            margin-top: 48px;
+            padding-top: 48px;
+            border-top: 1px solid var(--border);
+        }
+
+        .pricing-guarantee {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .pricing-guarantee-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
         }
     </style>
 </head>
@@ -1288,6 +1577,135 @@
                             <polyline points="12 5 19 12 12 19"></polyline>
                         </svg>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="section pricing" id="preise">
+        <div class="container">
+            <p class="section-label">Unsere Pakete</p>
+            <h2 class="section-title">Transparent &amp;<br>flexibel</h2>
+            <div class="pricing-grid">
+
+                <!-- Basis -->
+                <div class="pricing-card">
+                    <p class="pricing-name">Basis-Website</p>
+                    <p class="pricing-desc">Perfekt für Unternehmen, die online sichtbar werden wollen.</p>
+                    <div class="pricing-price">
+                        <span class="pricing-currency">CHF</span>
+                        <span class="pricing-amount">150</span>
+                        <span class="pricing-period">/Monat</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            Professionelles Webdesign
+                        </li>
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            Mobile-optimiert &amp; responsiv
+                        </li>
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            Hosting &amp; Domain inklusive
+                        </li>
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            SSL-Zertifikat
+                        </li>
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            Persönlicher Support
+                        </li>
+                    </ul>
+                    <a href="tel:+41782630406" class="btn btn-outline pricing-cta">Jetzt anfragen</a>
+                </div>
+
+                <!-- Mit SEO – Featured -->
+                <div class="pricing-card featured">
+                    <span class="pricing-badge">Beliebteste Wahl</span>
+                    <p class="pricing-name">Mit SEO-Optimierung</p>
+                    <p class="pricing-desc">Mehr Sichtbarkeit, mehr Kunden – nachhaltig und messbar.</p>
+                    <div class="pricing-price">
+                        <span class="pricing-currency">CHF</span>
+                        <span class="pricing-amount">199</span>
+                        <span class="pricing-period">/Monat</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            Alles aus Basis-Website
+                        </li>
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            On-Page &amp; technisches SEO
+                        </li>
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            Keyword-Recherche
+                        </li>
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            Monatliches Analytics-Reporting
+                        </li>
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            Google Business Optimierung
+                        </li>
+                    </ul>
+                    <a href="tel:+41782630406" class="btn btn-primary pricing-cta">Jetzt anfragen</a>
+                </div>
+
+                <!-- Premium mit Shop -->
+                <div class="pricing-card">
+                    <p class="pricing-name">Premium mit Shop</p>
+                    <p class="pricing-desc">Für Unternehmen, die online verkaufen und wachsen wollen.</p>
+                    <div class="pricing-price">
+                        <span class="pricing-currency">CHF</span>
+                        <span class="pricing-amount">279</span>
+                        <span class="pricing-period">/Monat</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            Alles aus SEO-Paket
+                        </li>
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            Online-Shop (unbegrenzte Produkte)
+                        </li>
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            Zahlungsintegration (Stripe, TWINT)
+                        </li>
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            Prioritäts-Support
+                        </li>
+                        <li class="pricing-feature">
+                            <div class="pricing-feature-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"></polyline></svg></div>
+                            Lager- &amp; Bestellverwaltung
+                        </li>
+                    </ul>
+                    <a href="tel:+41782630406" class="btn btn-outline pricing-cta">Jetzt anfragen</a>
+                </div>
+            </div>
+
+            <!-- Guarantees -->
+            <div class="pricing-guarantees">
+                <div class="pricing-guarantee">
+                    <div class="pricing-guarantee-dot"></div>
+                    Monatlich kündbar
+                </div>
+                <div class="pricing-guarantee">
+                    <div class="pricing-guarantee-dot"></div>
+                    Keine versteckten Kosten
+                </div>
+                <div class="pricing-guarantee">
+                    <div class="pricing-guarantee-dot"></div>
+                    Persönlicher Support inklusive
                 </div>
             </div>
         </div>
